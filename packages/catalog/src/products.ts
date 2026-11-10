@@ -1,6 +1,6 @@
 import manifest from "../../../assets/northfold/manifest.json" with { type: "json" };
 import rows from "./products.data.json" with { type: "json" };
-import type { Category, Product } from "./types";
+import type { Category, Product } from "./types.ts";
 
 type ManifestEntry = (typeof manifest)[number];
 const byFile = new Map<string, ManifestEntry>(manifest.map((m) => [m.file, m]));

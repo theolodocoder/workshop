@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { getProduct, products } from "./index";
+import { getProduct, products } from "./index.ts";
 
 const assetsDir = fileURLToPath(new URL("../../../assets/northfold/", import.meta.url));
 

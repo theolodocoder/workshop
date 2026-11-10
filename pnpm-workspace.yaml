@@ -6,5 +6,7 @@ packages:
 allowBuilds:
   "@astryxdesign/core": false
   "@astryxdesign/cli": false
+  # Supabase CLI downloads its own binary on install.
+  supabase: true
 
 saveExact: true

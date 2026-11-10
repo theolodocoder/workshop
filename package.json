@@ -11,14 +11,23 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "e2e": "turbo run e2e"
+    "e2e": "turbo run e2e",
+    "gen:seed": "node scripts/gen-seed.mjs",
+    "db:start": "supabase start --workdir supabase/before && supabase start --workdir supabase/rescue",
+    "db:reset": "supabase db reset --workdir supabase/before && supabase db reset --workdir supabase/rescue",
+    "db:stop": "supabase stop --workdir supabase/before && supabase stop --workdir supabase/rescue",
+    "test:db": "vitest run"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@types/pg": "8.23.1",
     "eslint": "10.14.0",
+    "pg": "8.23.1",
     "prettier": "3.9.10",
+    "supabase": "3.1.0",
     "turbo": "2.11.10",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.72.1"
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0"
   }
 }
