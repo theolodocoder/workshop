@@ -317,12 +317,14 @@
 - Test: `apps/rescue/e2e/report.spec.ts`
 
 **Interfaces:**
-- Produces: `type Fix = { id: 1|2|3|4|5|6|7|8|9; title: string; risk: string; fix: string; commit: string | null; test: string }` and `fixes: Fix[]` (9 items). `commit` stays `null` until Task 27.
+- Produces: `type Fix = { id: 1|2|3|4|5|6|7|8|9; group: 'security' | 'frontend'; title: string; risk: string; fix: string; commit: string | null; test: string }` and `fixes: Fix[]` (9 items; group security = 1,2,3, frontend = 4..9). `commit` stays `null` until Task 27. `orderFixes(fixes, focus: 'rescue' | 'frontend'): Fix[]`: rescue order = 1,2,3,4,5,6,7,8,9; frontend order = 7,8,4,5,6,9,1,2,3 (Promise, 2026-11-10: frontend clients see speed, accessibility and UX states first).
+- The report reads `?focus=frontend` (default `rescue`); the results table also leads with speed + accessibility rows when `focus=frontend`.
 - [ ] **Step 1: Failing tests:**
   - `/report` shows 9 fix cards
   - with `results.json` absent, it shows "Not measured yet"
   - with a fixture present, it shows the before and after LCP and the method text
   - a `null` commit shows "Link after release", not a broken link
+  - `/report?focus=frontend` shows Fix 7 (speed) as the first card, `/report` shows Fix 1 first
   - home has links "Open the before shop" (to `NEXT_PUBLIC_BEFORE_URL`) and "Open the rescued shop"
   - if the before app's `/api/health` (added to `rescue-before` with Promise's OK, since it's frozen) doesn't answer within 3 s, the before door shows "Watch the clip instead", linking to the recorded video (spec: paused-project fallback)
 - [ ] **Step 2:** Run them. Expected: FAIL. **Step 3:** Implement from the approved mockup. **Step 4:** Run them. Expected: PASS.
@@ -393,7 +395,7 @@
 - [ ] **Step 2:** Commit: `chore: add hourly reset, nightly reset and keep-alive jobs`
 
 ### Task 26: README, credits, video script, portfolio text
-- [ ] **Step 1:** Write `README.md` (1-line pitch, live links, "what this proves", architecture diagram, results table read from `results.json`, how to run, "Built on Astryx (MIT, by Meta)"), plus `apps/rescue/app/about/page.tsx` with all 40 photo credits, plus `docs/video-script.md` (30 s, opens on "Try to break it") and `docs/portfolio-item.md` (Upwork and Fiverr text, Supabase described only as "built and secured on Supabase").
+- [ ] **Step 1:** Write `README.md` (1-line pitch, live links, "what this proves", architecture diagram, results table read from `results.json`, how to run, "Built on Astryx (MIT, by Meta)"), plus `apps/rescue/app/about/page.tsx` with all 40 photo credits, plus `docs/video-script.md` with **two 30 s versions** (Promise, 2026-11-10): *Rescue/audit* opens on "Try to break it"; *Frontend* opens on the speed race (both shops on throttled mobile) and the keyboard test, break-in last, and links `/report?focus=frontend` and `docs/portfolio-item.md` (Upwork and Fiverr text, Supabase described only as "built and secured on Supabase").
 - [ ] **Step 2:** **Show all of it to Promise.** Change it until he approves.
 - [ ] **Step 3:** Commit: `docs: add README, credits and launch copy`
 

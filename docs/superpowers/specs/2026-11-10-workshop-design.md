@@ -140,6 +140,9 @@ flowchart LR
 
 Estimated 5 to 6 working days.
 
+### Two audiences (Promise, 2026-11-10)
+The headline break-in is a database fix, which a pure frontend buyer may read as backend work. So there are two 30 s videos: *rescue/audit* (opens on the break-in) and *frontend* (opens on the speed race + keyboard test). And `/report?focus=frontend` puts speed, accessibility and UX-state fixes first. Proposals link whichever version fits the job.
+
 ### What it maps to
 - **Upwork:** a lead Catalog offer reworked as "Code, security and speed audit for your Next.js / React app" plus a "Finish and launch your app" offer. Proposal templates for the "finish/fix/launch" and audit posts.
 - **Fiverr:** Gig 1 (fix bugs and speed up) and Gig 2 (SaaS/MVP).
