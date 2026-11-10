@@ -16,3 +16,15 @@ export function addToCart(line: CartLine) {
 export function clearCart() {
   localStorage.removeItem("cart");
 }
+
+export function setQty(id: string, qty: number): CartLine[] {
+  const cart = getCart().map((l) => (l.id === id ? { ...l, qty } : l));
+  localStorage.setItem("cart", JSON.stringify(cart));
+  return cart;
+}
+
+export function removeFromCart(id: string): CartLine[] {
+  const cart = getCart().filter((l) => l.id !== id);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  return cart;
+}

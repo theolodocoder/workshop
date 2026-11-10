@@ -11,7 +11,8 @@ import { HStack, VStack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { clearCart, getCart, type CartLine } from "@/lib/cart";
+import { CartLineRow } from "@/components/CartLineRow";
+import { clearCart, getCart, removeFromCart, setQty, type CartLine } from "@/lib/cart";
 import { money } from "@/lib/constants";
 import { placeOrder, type PlaceOrderResult } from "./actions";
 
@@ -61,13 +62,7 @@ export default function Cart() {
       <Grid columns={2} gap={8} align="start">
         <VStack gap={4}>
           {cart.map((l) => (
-            <HStack key={l.id} gap={4} vAlign="center">
-              <VStack gap={1} style={{ flex: 1 }}>
-                <Text weight="semibold">{l.name}</Text>
-                <Text type="supporting">×{l.qty}</Text>
-              </VStack>
-              <Text weight="semibold">{money(l.price_cents * l.qty)}</Text>
-            </HStack>
+            <CartLineRow key={l.id} line={l} onQty={(qty) => setLines(setQty(l.id, qty))} onRemove={() => setLines(removeFromCart(l.id))} />
           ))}
         </VStack>
         <Card padding={5}>

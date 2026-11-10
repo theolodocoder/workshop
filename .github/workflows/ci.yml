@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+# Public values of the Supabase CLI's local demo stack (not secrets; the same on every machine).
+env:
+  LOCAL_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+
 jobs:
   check:
     runs-on: ubuntu-24.04
@@ -16,11 +20,29 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm turbo run lint typecheck test
-      # Fix 2 guard: the rescued shop's browser bundle must never contain a secret key.
-      - name: Build the rescued shop and scan it for secrets
+
+      # Both local Supabase stacks (Docker is available on GitHub's Ubuntu runners).
+      - name: Start the before and rescue databases
+        run: pnpm db:start && pnpm db:reset
+      - name: Database tests (security rules, checkout, seed)
+        run: pnpm test:db
+
+      - run: pnpm --filter rescue exec playwright install --with-deps chromium
+
+      - name: Rescued shop, build, secret scan, end-to-end tests
         env:
           NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.LOCAL_SUPABASE_ANON_KEY || 'local-anon-key-placeholder' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ env.LOCAL_ANON_KEY }}
         run: |
           pnpm --filter rescue build
           node scripts/check-client-secrets.mjs apps/rescue/.next/static
+          pnpm --filter rescue e2e
+
+      - name: Before shop, build and end-to-end tests
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54421
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ env.LOCAL_ANON_KEY }}
+          NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY: dummy-not-a-real-key
+        run: |
+          pnpm --filter rescue-before build
+          pnpm --filter rescue-before e2e
