@@ -11,6 +11,8 @@ concurrency: reset-rescue
 
 jobs:
   reset:
+    # Off until the Supabase projects exist: set the repository variable RESETS_ENABLED=true.
+    if: vars.RESETS_ENABLED == 'true'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
