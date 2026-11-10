@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 4310",
-    "build": "next build",
+    "dev": "pnpm photos && next dev --port 4310",
+    "build": "pnpm photos && next build",
     "start": "next start --port 4310",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "e2e": "playwright test",
-    "test": "vitest run --dir src"
+    "test": "vitest run --dir src",
+    "photos": "node ../../scripts/copy-photos.mjs public/products"
   },
   "dependencies": {
     "@astryxdesign/core": "0.7.11",
