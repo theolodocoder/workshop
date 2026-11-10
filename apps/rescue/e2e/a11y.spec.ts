@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-// /report and /check join this list when they're built (Tasks 21 and 24).
-const PAGES = ["/", "/c/tents", "/p/ridge-2-dome-tent", "/cart", "/orders", "/no-such-page"];
+// /check joins this list when it's built (Task 24).
+const PAGES = ["/", "/shop", "/report", "/report?focus=frontend", "/c/tents", "/p/ridge-2-dome-tent", "/cart", "/orders", "/no-such-page"];
 
 for (const path of PAGES) {
   test(`${path} has no serious or critical accessibility problems`, async ({ page }) => {

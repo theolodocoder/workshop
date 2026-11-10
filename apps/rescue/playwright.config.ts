@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const PORT = 4310;
 const DOWN_PORT = 4320;
+const MEASURED_PORT = 4330;
 
 export default defineConfig({
   testDir: "./e2e",
@@ -10,7 +11,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      testIgnore: /store-down\.spec\.ts/,
+      testIgnore: /(store-down|report-measured)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${PORT}` },
     },
     {
@@ -19,6 +20,12 @@ export default defineConfig({
       testMatch: /store-down\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${DOWN_PORT}` },
     },
+    {
+      // The same build, given a results file, to check how the report shows real numbers.
+      name: "measured",
+      testMatch: /report-measured\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${MEASURED_PORT}` },
+    },
   ],
   webServer: [
     { command: "pnpm start", port: PORT, reuseExistingServer: !process.env.CI },
@@ -26,7 +33,13 @@ export default defineConfig({
       command: `pnpm exec next start --port ${DOWN_PORT}`,
       port: DOWN_PORT,
       reuseExistingServer: false,
-      env: { SUPABASE_URL: "http://127.0.0.1:59999" },
+      env: { SUPABASE_URL: "http://127.0.0.1:59999", BEFORE_SUPABASE_URL: "http://127.0.0.1:59998" },
+    },
+    {
+      command: `pnpm exec next start --port ${MEASURED_PORT}`,
+      port: MEASURED_PORT,
+      reuseExistingServer: false,
+      env: { RESULTS_PATH: "e2e/fixtures/results.json" },
     },
   ],
 });

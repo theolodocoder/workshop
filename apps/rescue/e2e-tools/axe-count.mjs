@@ -1,3 +1,4 @@
+/* global process, console */
 // Counts serious + critical accessibility problems (axe, WCAG 2.2 AA) on one page, for the report.
 // Usage (from apps/rescue): node e2e-tools/axe-count.mjs <url>
 import AxeBuilder from "@axe-core/playwright";

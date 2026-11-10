@@ -56,7 +56,7 @@ export default function Orders() {
         {shopper && store.status === "loading" && <Loading label="Loading your orders" />}
         {shopper && store.status === "error" && <StoreWaking onRetry={store.retry} />}
         {shopper && store.status === "ready" && rows.length === 0 && (
-          <EmptyState title="No orders yet" description="When you check out, your orders show up here." actions={<Button label="Browse the shop" href="/" />} />
+          <EmptyState title="No orders yet" description="When you check out, your orders show up here." actions={<Button label="Browse the shop" href="/shop" />} />
         )}
         {rows.length > 0 && (
           <Table<Row>

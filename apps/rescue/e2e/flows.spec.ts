@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("browse, add two things, change a quantity, remove one, check out", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/shop");
   await page.getByRole("button", { name: "Sign in as a demo shopper" }).click();
   await expect(page.getByText("Signed in as demo shopper")).toBeVisible();
 

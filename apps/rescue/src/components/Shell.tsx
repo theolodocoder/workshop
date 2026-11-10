@@ -25,8 +25,9 @@ export function Shell({ children, signedIn }: { children: React.ReactNode; signe
           heading={<TopNavHeading heading="Northfold Outfitters" logo={<NavIcon icon={<Icon icon={SunIcon} size="sm" />} />} headingHref="/" />}
           centerContent={
             <>
-              <TopNavItem label="Shop" href="/" isSelected={path === "/" || path.startsWith("/c/") || path.startsWith("/p/")} />
+              <TopNavItem label="Shop" href="/shop" isSelected={path === "/shop" || path.startsWith("/c/") || path.startsWith("/p/")} />
               <TopNavItem label="My orders" href="/orders" isSelected={path === "/orders"} />
+              <TopNavItem label="Rescue report" href="/report" isSelected={path === "/report"} />
             </>
           }
           endContent={

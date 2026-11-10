@@ -1,0 +1,7 @@
+{
+  "measuredAt": "2000-01-01",
+  "method": "TEST FIXTURE ONLY, not a real measurement",
+  "before": { "lcpMs": 4100, "tbtMs": 620, "cls": 0.31, "jsKb": 401, "axeIssues": 17 },
+  "after": { "lcpMs": 1500, "tbtMs": 120, "cls": 0.01, "jsKb": 293, "axeIssues": 0 },
+  "testCount": 60
+}

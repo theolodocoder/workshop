@@ -32,7 +32,7 @@ test("no charting library is loaded on the shop pages", async ({ page }) => {
   page.on("response", async (res) => {
     if (res.request().resourceType() === "script") scripts.push(await res.text().catch(() => ""));
   });
-  await page.goto("/");
+  await page.goto("/shop");
   await page.waitForLoadState("networkidle");
   expect(scripts.some((s) => s.includes("recharts"))).toBe(false);
 });

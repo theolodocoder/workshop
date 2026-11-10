@@ -8,7 +8,7 @@ export function CategoryTabs({ current }: { current: string }) {
   return (
     <nav aria-label="Categories">
       <TabList value={current} onChange={() => {}} hasDivider>
-        <Tab value="all" label="All" href="/" />
+        <Tab value="all" label="All" href="/shop" />
         {CATEGORIES.map(([key, label]) => (
           <Tab key={key} value={key} label={label} href={`/c/${key}`} />
         ))}

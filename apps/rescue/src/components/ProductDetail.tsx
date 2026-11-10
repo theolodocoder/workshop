@@ -35,7 +35,7 @@ export function ProductDetail({ p }: { p: ShopProduct }) {
   return (
     <VStack gap={4}>
       <Breadcrumbs>
-        <BreadcrumbItem href="/">Shop</BreadcrumbItem>
+        <BreadcrumbItem href="/shop">Shop</BreadcrumbItem>
         <BreadcrumbItem href={`/c/${p.category}`}>{categoryLabel}</BreadcrumbItem>
         <BreadcrumbItem>{p.name}</BreadcrumbItem>
       </Breadcrumbs>

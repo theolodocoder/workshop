@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("a demo shopper can browse, add a tent, check out and see the order", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/shop");
   await page.getByText("Sign in as a demo shopper").click();
   await expect(page.getByText("Signed in as demo shopper")).toBeVisible();
 

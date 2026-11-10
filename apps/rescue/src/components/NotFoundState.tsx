@@ -9,7 +9,7 @@ export function NotFoundState() {
       headingLevel={1}
       title="We couldn't find that page"
       description="The product may have moved, or the link has a typo."
-      actions={<Button label="Back to the shop" variant="primary" href="/" />}
+      actions={<Button label="Back to the shop" variant="primary" href="/shop" />}
     />
   );
 }

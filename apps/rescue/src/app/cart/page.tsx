@@ -37,7 +37,7 @@ export default function Cart() {
         headingLevel={1}
         title="Your cart is empty"
         description="Find a tent, a pack or a mug to get started."
-        actions={<Button label="Browse the shop" variant="primary" href="/" />}
+        actions={<Button label="Browse the shop" variant="primary" href="/shop" />}
       />
     );
 

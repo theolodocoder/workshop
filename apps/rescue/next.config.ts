@@ -11,6 +11,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   // Workspace packages ship TypeScript source.
   transpilePackages: ["@workshop/ui", "@workshop/catalog"],
+  // The report reads content/results.json at request time; ship it with the server bundle.
+  outputFileTracingIncludes: { "/report": ["./content/**"] },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

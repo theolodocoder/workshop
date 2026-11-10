@@ -13,7 +13,7 @@ export default function ErrorPage({ reset }: { error: Error; reset: () => void }
       actions={
         <>
           <Button label="Try again" variant="primary" onClick={reset} />
-          <Button label="Back to the shop" href="/" />
+          <Button label="Back to the shop" href="/shop" />
         </>
       }
     />

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 // Runs against a server whose database never answers (see playwright.config.ts, "store-down").
-for (const path of ["/", "/c/tents", "/p/summit-light-tent"]) {
+for (const path of ["/shop", "/c/tents", "/p/summit-light-tent"]) {
   test(`${path}: store down shows the waking-up message and a retry button`, async ({ page }) => {
     const t0 = Date.now();
     await page.goto(path);
@@ -14,9 +14,15 @@ for (const path of ["/", "/c/tents", "/p/summit-light-tent"]) {
 }
 
 test("Retry asks the server again", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/shop");
   const again = page.waitForResponse((r) => r.url().includes("localhost") && r.request().method() === "GET");
   await page.getByRole("button", { name: "Retry" }).click();
   await again;
   await expect(page.getByText("Store is waking up")).toBeVisible();
+});
+
+test("home: when the before shop's database is asleep, its door offers something else", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("The before shop is asleep right now")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open the rescued shop" })).toBeVisible();
 });

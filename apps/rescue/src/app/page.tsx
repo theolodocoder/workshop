@@ -1,17 +1,7 @@
-import { CategoryTabs } from "@/components/CategoryTabs";
-import { PageIntro } from "@/components/PageIntro";
-import { ProductGrid } from "@/components/ProductGrid";
-import { StoreWaking } from "@/components/StoreStates";
-import { getProducts } from "@/lib/products";
+import { HomeDoors } from "@/components/HomeDoors";
+import { BEFORE_CLIP_URL, BEFORE_URL, beforeShopAwake } from "@/lib/before-health";
 
-// FIX 7: a server component. Products are fetched on the server and arrive with the HTML.
+// The two-door home: the before shop and the rescued shop, side by side.
 export default async function Home() {
-  const products = await getProducts();
-  return (
-    <div style={{ display: "grid", gap: 24 }}>
-      <PageIntro title="Gear for long days outside" lead="Tents, packs, boots and camp kit. 40 products, all made up." />
-      <CategoryTabs current="all" />
-      {products.ok ? <ProductGrid products={products.data} /> : <StoreWaking />}
-    </div>
-  );
+  return <HomeDoors beforeUrl={BEFORE_URL} beforeAwake={await beforeShopAwake()} clipUrl={BEFORE_CLIP_URL} />;
 }
