@@ -1,0 +1,362 @@
+[
+  {
+    "id": "nf-001",
+    "slug": "ridge-2-dome-tent",
+    "name": "Ridge 2 Dome Tent",
+    "category": "tents",
+    "priceCents": 28900,
+    "description": "A two-person dome tent that pitches in five minutes and sheds wind on exposed ridges.",
+    "file": "ridge-2-dome-tent.jpg"
+  },
+  {
+    "id": "nf-002",
+    "slug": "hollow-pine-3-tent",
+    "name": "Hollow Pine 3 Tent",
+    "category": "tents",
+    "priceCents": 34900,
+    "description": "Roomy three-person tent with two doors, so nobody climbs over anyone at 3 a.m.",
+    "file": "hollow-pine-3-tent.jpg"
+  },
+  {
+    "id": "nf-003",
+    "slug": "ember-night-tent",
+    "name": "Ember Night Tent",
+    "category": "tents",
+    "priceCents": 31900,
+    "description": "A warm-toned canvas-look dome with a full rainfly and big mesh vents.",
+    "file": "ember-night-tent.jpg"
+  },
+  {
+    "id": "nf-004",
+    "slug": "mossline-solo-tent",
+    "name": "Mossline Solo Tent",
+    "category": "tents",
+    "priceCents": 21900,
+    "description": "A light one-person shelter for long trails and short nights.",
+    "file": "mossline-solo-tent.jpg"
+  },
+  {
+    "id": "nf-005",
+    "slug": "summit-light-tent",
+    "name": "Summit Light Tent",
+    "category": "tents",
+    "priceCents": 42900,
+    "description": "Four-season dome with a low profile for high camps and hard weather.",
+    "file": "summit-light-tent.jpg"
+  },
+  {
+    "id": "nf-006",
+    "slug": "trailhead-pop-tent",
+    "name": "Trailhead Pop Tent",
+    "category": "tents",
+    "priceCents": 15900,
+    "description": "Fast-pitch tent for weekend car camping. Bright, simple, done.",
+    "file": "trailhead-pop-tent.jpg"
+  },
+  {
+    "id": "nf-007",
+    "slug": "canopy-4-family-tent",
+    "name": "Canopy 4 Tent",
+    "category": "tents",
+    "priceCents": 39900,
+    "description": "A four-person tent with a tall vestibule for boots and packs.",
+    "file": "canopy-4-family-tent.jpg"
+  },
+  {
+    "id": "nf-008",
+    "slug": "granite-45-pack",
+    "name": "Granite 45 Pack",
+    "category": "packs",
+    "priceCents": 18900,
+    "description": "A 45-litre pack with a ventilated back panel and a stretch front pocket.",
+    "file": "granite-45-pack.jpg"
+  },
+  {
+    "id": "nf-009",
+    "slug": "twin-peak-30-pack",
+    "name": "Twin Peak 30 Pack",
+    "category": "packs",
+    "priceCents": 13900,
+    "description": "A 30-litre day pack that fits a lunch, a layer and a camera.",
+    "file": "twin-peak-30-pack.jpg"
+  },
+  {
+    "id": "nf-010",
+    "slug": "fernback-38-pack",
+    "name": "Fernback 38 Pack",
+    "category": "packs",
+    "priceCents": 16900,
+    "description": "Durable 38-litre pack with a padded hip belt for full-day loads.",
+    "file": "fernback-38-pack.jpg"
+  },
+  {
+    "id": "nf-011",
+    "slug": "logline-28-pack",
+    "name": "Logline 28 Pack",
+    "category": "packs",
+    "priceCents": 12900,
+    "description": "A clean 28-litre pack with a laptop sleeve for trail-to-town days.",
+    "file": "logline-28-pack.jpg"
+  },
+  {
+    "id": "nf-012",
+    "slug": "riverbank-22-pack",
+    "name": "Riverbank 22 Pack",
+    "category": "packs",
+    "priceCents": 9900,
+    "description": "A bright 22-litre pack that's easy to spot on the trail.",
+    "file": "riverbank-22-pack.jpg"
+  },
+  {
+    "id": "nf-013",
+    "slug": "meadow-20-pack",
+    "name": "Meadow 20 Pack",
+    "category": "packs",
+    "priceCents": 8900,
+    "description": "A small, light pack for short hikes and picnic walks.",
+    "file": "meadow-20-pack.jpg"
+  },
+  {
+    "id": "nf-014",
+    "slug": "basin-55-pack",
+    "name": "Basin 55 Pack",
+    "category": "packs",
+    "priceCents": 23900,
+    "description": "A 55-litre trekking pack with a floating lid and side access.",
+    "file": "basin-55-pack.jpg"
+  },
+  {
+    "id": "nf-015",
+    "slug": "crag-leather-boot",
+    "name": "Crag Leather Boot",
+    "category": "footwear",
+    "priceCents": 21900,
+    "description": "Full-grain leather hiking boot with a grippy lugged sole.",
+    "file": "crag-leather-boot.jpg"
+  },
+  {
+    "id": "nf-016",
+    "slug": "switchback-mid-boot",
+    "name": "Switchback Mid Boot",
+    "category": "footwear",
+    "priceCents": 18900,
+    "description": "A mid-cut boot with ankle support for rocky switchbacks.",
+    "file": "switchback-mid-boot.jpg"
+  },
+  {
+    "id": "nf-017",
+    "slug": "snowline-winter-boot",
+    "name": "Snowline Winter Boot",
+    "category": "footwear",
+    "priceCents": 24900,
+    "description": "Insulated boot for snowy trails and cold mornings.",
+    "file": "snowline-winter-boot.jpg"
+  },
+  {
+    "id": "nf-018",
+    "slug": "heritage-trail-boot",
+    "name": "Heritage Trail Boot",
+    "category": "footwear",
+    "priceCents": 19900,
+    "description": "A classic lace-up boot that breaks in fast and lasts for years.",
+    "file": "heritage-trail-boot.jpg"
+  },
+  {
+    "id": "nf-019",
+    "slug": "cobble-lace-boot",
+    "name": "Cobble Lace Boot",
+    "category": "footwear",
+    "priceCents": 17900,
+    "description": "Everyday leather boot that's at home on gravel and city streets.",
+    "file": "cobble-lace-boot.jpg"
+  },
+  {
+    "id": "nf-020",
+    "slug": "mudrun-trail-shoe",
+    "name": "Mudrun Trail Shoe",
+    "category": "footwear",
+    "priceCents": 14900,
+    "description": "A light trail shoe that drains fast after creek crossings.",
+    "file": "mudrun-trail-shoe.jpg"
+  },
+  {
+    "id": "nf-021",
+    "slug": "skyward-down-bag",
+    "name": "Skyward Down Bag",
+    "category": "sleep",
+    "priceCents": 27900,
+    "description": "A down sleeping bag rated for chilly alpine nights.",
+    "file": "skyward-down-bag.jpg"
+  },
+  {
+    "id": "nf-022",
+    "slug": "vista-synthetic-bag",
+    "name": "Vista Synthetic Bag",
+    "category": "sleep",
+    "priceCents": 15900,
+    "description": "Synthetic-fill bag that stays warm even when it's damp.",
+    "file": "vista-synthetic-bag.jpg"
+  },
+  {
+    "id": "nf-023",
+    "slug": "campervan-quilt",
+    "name": "Campervan Quilt",
+    "category": "sleep",
+    "priceCents": 11900,
+    "description": "A soft camp quilt for vans, cabins and warm-weather tents.",
+    "file": "campervan-quilt.jpg"
+  },
+  {
+    "id": "nf-024",
+    "slug": "frostcamp-bag",
+    "name": "Frostcamp Bag",
+    "category": "sleep",
+    "priceCents": 32900,
+    "description": "A winter bag with a draft collar for nights in the snow.",
+    "file": "frostcamp-bag.jpg"
+  },
+  {
+    "id": "nf-025",
+    "slug": "lakeside-hammock",
+    "name": "Lakeside Hammock",
+    "category": "sleep",
+    "priceCents": 6900,
+    "description": "A packable hammock with tree straps included.",
+    "file": "lakeside-hammock.jpg"
+  },
+  {
+    "id": "nf-026",
+    "slug": "flameline-stove",
+    "name": "Flameline Stove",
+    "category": "cooking",
+    "priceCents": 7900,
+    "description": "A compact gas stove that boils water in about three minutes.",
+    "file": "flameline-stove.jpg"
+  },
+  {
+    "id": "nf-027",
+    "slug": "canister-cook-set",
+    "name": "Canister Cook Set",
+    "category": "cooking",
+    "priceCents": 5900,
+    "description": "A pot and stove kit that nests into one small bundle.",
+    "file": "canister-cook-set.jpg"
+  },
+  {
+    "id": "nf-028",
+    "slug": "enamel-camp-mug",
+    "name": "Enamel Camp Mug",
+    "category": "cooking",
+    "priceCents": 1900,
+    "description": "A classic enamel mug for coffee at sunrise.",
+    "file": "enamel-camp-mug.jpg"
+  },
+  {
+    "id": "nf-029",
+    "slug": "breakfast-burner",
+    "name": "Breakfast Burner",
+    "category": "cooking",
+    "priceCents": 6900,
+    "description": "A stable single burner wide enough for a frying pan.",
+    "file": "breakfast-burner.jpg"
+  },
+  {
+    "id": "nf-030",
+    "slug": "trail-coffee-pot",
+    "name": "Trail Coffee Pot",
+    "category": "cooking",
+    "priceCents": 3900,
+    "description": "A light percolator for real coffee at camp.",
+    "file": "trail-coffee-pot.jpg"
+  },
+  {
+    "id": "nf-031",
+    "slug": "ultralight-stove",
+    "name": "Ultralight Stove",
+    "category": "cooking",
+    "priceCents": 4900,
+    "description": "A tiny titanium-look stove that weighs almost nothing.",
+    "file": "ultralight-stove.jpg"
+  },
+  {
+    "id": "nf-032",
+    "slug": "fireside-kettle",
+    "name": "Fireside Kettle",
+    "category": "cooking",
+    "priceCents": 4400,
+    "description": "A sturdy kettle that's happy over an open fire.",
+    "file": "fireside-kettle.jpg"
+  },
+  {
+    "id": "nf-033",
+    "slug": "brass-camp-lantern",
+    "name": "Brass Camp Lantern",
+    "category": "lights",
+    "priceCents": 5900,
+    "description": "A warm-glow lantern for the camp table.",
+    "file": "brass-camp-lantern.jpg"
+  },
+  {
+    "id": "nf-034",
+    "slug": "night-trail-lantern",
+    "name": "Night Trail Lantern",
+    "category": "lights",
+    "priceCents": 4900,
+    "description": "A hanging lantern that lights up the whole campsite.",
+    "file": "night-trail-lantern.jpg"
+  },
+  {
+    "id": "nf-035",
+    "slug": "branch-hang-lantern",
+    "name": "Branch Hang Lantern",
+    "category": "lights",
+    "priceCents": 3900,
+    "description": "A small lantern with a hook for tree branches and tent loops.",
+    "file": "branch-hang-lantern.jpg"
+  },
+  {
+    "id": "nf-036",
+    "slug": "shoreline-gas-lamp",
+    "name": "Shoreline Gas Lamp",
+    "category": "lights",
+    "priceCents": 6900,
+    "description": "A bright gas lamp for long evenings by the water.",
+    "file": "shoreline-gas-lamp.jpg"
+  },
+  {
+    "id": "nf-037",
+    "slug": "cloud-puffer-jacket",
+    "name": "Cloud Puffer Jacket",
+    "category": "clothing",
+    "priceCents": 19900,
+    "description": "A warm puffer jacket that packs into its own pocket.",
+    "file": "cloud-puffer-jacket.jpg"
+  },
+  {
+    "id": "nf-038",
+    "slug": "ridgeback-shell-jacket",
+    "name": "Ridgeback Shell Jacket",
+    "category": "clothing",
+    "priceCents": 16900,
+    "description": "A waterproof shell with a stowable hood.",
+    "file": "ridgeback-shell-jacket.jpg"
+  },
+  {
+    "id": "nf-039",
+    "slug": "basecamp-knit-cap",
+    "name": "Basecamp Knit Cap",
+    "category": "clothing",
+    "priceCents": 2900,
+    "description": "A soft knit cap for cold mornings at camp.",
+    "file": "basecamp-knit-cap.jpg"
+  },
+  {
+    "id": "nf-040",
+    "slug": "lichen-trail-hat",
+    "name": "Lichen Trail Hat",
+    "category": "clothing",
+    "priceCents": 3400,
+    "description": "A light hat that keeps sun and drizzle off your face.",
+    "file": "lichen-trail-hat.jpg"
+  }
+]
