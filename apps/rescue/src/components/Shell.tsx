@@ -28,6 +28,7 @@ export function Shell({ children, signedIn }: { children: React.ReactNode; signe
               <TopNavItem label="Shop" href="/shop" isSelected={path === "/shop" || path.startsWith("/c/") || path.startsWith("/p/")} />
               <TopNavItem label="My orders" href="/orders" isSelected={path === "/orders"} />
               <TopNavItem label="Rescue report" href="/report" isSelected={path === "/report"} />
+              <TopNavItem label="Check your site" href="/check" isSelected={path === "/check"} />
             </>
           }
           endContent={

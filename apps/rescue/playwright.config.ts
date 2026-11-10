@@ -3,15 +3,18 @@ import { defineConfig, devices } from "@playwright/test";
 const PORT = 4310;
 const DOWN_PORT = 4320;
 const MEASURED_PORT = 4330;
+const CHECK_PORT = 4340;
+const MOCK_PORT = 4398;
 
 export default defineConfig({
   testDir: "./e2e",
+  globalSetup: "./e2e-tools/reset-check-counters.mjs",
   fullyParallel: true,
   reporter: [["list"]],
   projects: [
     {
       name: "chromium",
-      testIgnore: /(store-down|report-measured)\.spec\.ts/,
+      testIgnore: /(store-down|report-measured|check)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${PORT}` },
     },
     {
@@ -25,6 +28,12 @@ export default defineConfig({
       name: "measured",
       testMatch: /report-measured\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${MEASURED_PORT}` },
+    },
+    {
+      // The same build, with PageSpeed and the AI pointed at local mocks (e2e-tools/mock-apis.mjs).
+      name: "check",
+      testMatch: /check\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${CHECK_PORT}` },
     },
   ],
   webServer: [
@@ -40,6 +49,19 @@ export default defineConfig({
       port: MEASURED_PORT,
       reuseExistingServer: false,
       env: { RESULTS_PATH: "e2e/fixtures/results.json" },
+    },
+    { command: `node e2e-tools/mock-apis.mjs ${MOCK_PORT}`, port: MOCK_PORT, reuseExistingServer: false },
+    {
+      command: `pnpm exec next start --port ${CHECK_PORT}`,
+      port: CHECK_PORT,
+      reuseExistingServer: false,
+      env: {
+        PAGESPEED_API_URL: `http://127.0.0.1:${MOCK_PORT}/pagespeed`,
+        PAGESPEED_API_KEY: "test-key",
+        CF_AI_BASE_URL: `http://127.0.0.1:${MOCK_PORT}/cf`,
+        CF_ACCOUNT_ID: "test-account",
+        CF_AI_TOKEN: "test-token",
+      },
     },
   ],
 });

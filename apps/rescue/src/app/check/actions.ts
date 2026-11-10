@@ -1,0 +1,72 @@
+"use server";
+
+import {
+  assertPublicUrl,
+  fetchHeadersSafely,
+  headerFindings,
+  type Item,
+  runPageSpeed,
+  summarize,
+  UnsafeUrlError,
+  visitorHash,
+  workersAi,
+} from "@workshop/ai";
+import { cookies, headers } from "next/headers";
+import { CheckUrl } from "@/lib/schemas";
+import { supabaseStore } from "@/lib/supabase/server";
+
+export type CheckResult = { url: string; performance: number; accessibility: number; items: Item[]; ai: boolean };
+export type CheckError = { error: "invalid" | "unsafe" | "visitor_limit" | "global_limit" | "unavailable" };
+
+const VISITOR_COOKIE = "nf_visitor";
+
+async function visitor(): Promise<string> {
+  const jar = await cookies();
+  let id = jar.get(VISITOR_COOKIE)?.value;
+  if (!id) {
+    id = crypto.randomUUID();
+    jar.set(VISITOR_COOKIE, id, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 365, path: "/" });
+  }
+  const h = await headers();
+  const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip") ?? "unknown";
+  return visitorHash(id, ip, process.env.CHECK_SALT ?? "local-dev-salt");
+}
+
+/**
+ * "Check your site": validate, refuse internal addresses, take one of today's checks, then run
+ * Google PageSpeed and read the site's security headers, and summarise in plain words.
+ * Order matters: nothing is fetched until the address is known to be public and a check is available.
+ */
+export async function checkUrl(raw: string): Promise<CheckResult | CheckError> {
+  const parsed = CheckUrl.safeParse(raw);
+  if (!parsed.success) return { error: "invalid" };
+
+  let url: URL;
+  try {
+    url = await assertPublicUrl(parsed.data);
+  } catch (e) {
+    return { error: e instanceof UnsafeUrlError ? "unsafe" : "invalid" };
+  }
+
+  const { data: quota, error } = await supabaseStore.rpc("take_check_quota", { visitor_hash: await visitor() });
+  if (error) return { error: "unavailable" };
+  if (quota === "visitor_limit" || quota === "global_limit") return { error: quota };
+
+  const key = process.env.PAGESPEED_API_KEY;
+  if (!key) return { error: "unavailable" };
+
+  try {
+    const [psi, siteHeaders] = await Promise.all([
+      runPageSpeed(url, key),
+      fetchHeadersSafely(url).catch(() => null),
+    ]);
+    const findings = siteHeaders ? headerFindings(siteHeaders) : [];
+    const accountId = process.env.CF_ACCOUNT_ID;
+    const token = process.env.CF_AI_TOKEN;
+    const run = accountId && token ? workersAi({ accountId, token }) : async () => Promise.reject(new Error("no AI configured"));
+    const summary = await summarize({ psi, headers: findings }, run);
+    return { url: url.href, performance: psi.performance, accessibility: psi.accessibility, ...summary };
+  } catch {
+    return { error: "unavailable" };
+  }
+}

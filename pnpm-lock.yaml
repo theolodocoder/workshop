@@ -217,6 +217,9 @@ importers:
       '@supabase/supabase-js':
         specifier: 2.119.0
         version: 2.119.0
+      '@workshop/ai':
+        specifier: workspace:*
+        version: link:../../packages/ai
       '@workshop/catalog':
         specifier: workspace:*
         version: link:../../packages/catalog
@@ -263,6 +266,9 @@ importers:
       eslint:
         specifier: 10.14.0
         version: 10.14.0(jiti@2.7.0)
+      pg:
+        specifier: 8.23.1
+        version: 8.23.1
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -356,7 +362,11 @@ importers:
         specifier: 5.1.0
         version: 5.1.0(@types/node@26.6.6)(vite@8.3.7(@types/node@26.6.6)(jiti@2.7.0))
 
-  packages/config: {}
+  packages/config:
+    dependencies:
+      globals:
+        specifier: 17.14.0
+        version: 17.14.0
 
   packages/ui:
     dependencies:
@@ -1618,6 +1628,10 @@ packages:
   glob-parent@6.0.2:
     resolution: {integrity: sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==}
     engines: {node: '>=10.13.0'}
+
+  globals@17.14.0:
+    resolution: {integrity: sha512-UtdkTVyAJePQv0J2M9Xe4L0ruNSDV314XiIJsADI2Zf40bcdAonE/D/OhAU8AT99oij9mhLByb+NvA3QWZYgCg==}
+    engines: {node: '>=18'}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -3511,6 +3525,8 @@ snapshots:
   glob-parent@6.0.2:
     dependencies:
       is-glob: 4.0.3
+
+  globals@17.14.0: {}
 
   graceful-fs@4.2.11: {}
 
