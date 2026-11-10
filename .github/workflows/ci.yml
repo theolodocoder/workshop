@@ -16,3 +16,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm turbo run lint typecheck test
+      # Fix 2 guard: the rescued shop's browser bundle must never contain a secret key.
+      - name: Build the rescued shop and scan it for secrets
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.LOCAL_SUPABASE_ANON_KEY || 'local-anon-key-placeholder' }}
+        run: |
+          pnpm --filter rescue build
+          node scripts/check-client-secrets.mjs apps/rescue/.next/static

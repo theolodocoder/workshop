@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { clearCart, getCart, type CartLine } from "@/lib/cart";
 import { money } from "@/lib/constants";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/browser";
 
 export default function Cart() {
   const router = useRouter();

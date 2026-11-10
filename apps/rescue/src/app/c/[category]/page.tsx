@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
-import { supabase, type ProductRow } from "@/lib/supabase";
+import { supabase, type ProductRow } from "@/lib/supabase/browser";
 
 export default function Category() {
   const { category } = useParams<{ category: string }>();

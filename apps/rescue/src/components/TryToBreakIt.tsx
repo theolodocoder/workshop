@@ -8,7 +8,7 @@ import { VStack } from "@astryxdesign/core/Stack";
 import { Text } from "@astryxdesign/core/Text";
 import { useState } from "react";
 import { BEN_TARGET_ORDER_ID, money } from "@/lib/constants";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/browser";
 
 type Found = { total_cents: number; order_items: { qty: number; products: { name: string; price_cents: number } }[] };
 

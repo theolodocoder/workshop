@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { ProductRow } from "@/lib/supabase";
+import type { ProductRow } from "@/lib/supabase/browser";
 import { money } from "@/lib/constants";
 
 export function ProductCard({ p }: { p: ProductRow }) {

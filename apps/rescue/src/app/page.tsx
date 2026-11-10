@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
 import { CATEGORIES } from "@/lib/constants";
-import { supabase, type ProductRow } from "@/lib/supabase";
+import { supabase, type ProductRow } from "@/lib/supabase/browser";
 
 export default function Home() {
   const router = useRouter();

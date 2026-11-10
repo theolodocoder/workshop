@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { addToCart } from "@/lib/cart";
 import { money } from "@/lib/constants";
-import { supabase, type ProductRow } from "@/lib/supabase";
+import { supabase, type ProductRow } from "@/lib/supabase/browser";
 
 export default function Product() {
   const { slug } = useParams<{ slug: string }>();

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { money } from "@/lib/constants";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/browser";
 import { TryToBreakIt } from "@/components/TryToBreakIt";
 
 type Order = {
