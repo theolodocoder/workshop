@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { money } from "@/lib/constants";
 import { supabase } from "@/lib/supabase";
+import { TryToBreakIt } from "@/components/TryToBreakIt";
 
 type Order = {
   id: string;
@@ -34,6 +35,9 @@ export default function Orders() {
           <div style={{ color: "#c4c4c4" }}>{new Date(o.created_at).toLocaleString()} · {money(o.total_cents)}</div>
         </div>
       ))}
+      <div style={{ marginTop: 40 }}>
+        <TryToBreakIt />
+      </div>
     </div>
   );
 }
