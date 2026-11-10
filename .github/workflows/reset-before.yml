@@ -1,0 +1,26 @@
+name: Reset the before shop (hourly)
+
+# The before shop is deliberately insecure, so its throwaway database is wiped and re-seeded
+# every hour: anything a visitor changes is gone within the hour. Also keeps the free project awake.
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+concurrency: reset-before
+
+jobs:
+  reset:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Drop, re-migrate and re-seed (also clears anonymous visitors)
+        env:
+          DB_URL: ${{ secrets.SUPABASE_BEFORE_DB_URL }}
+        run: pnpm exec supabase db reset --remote="$DB_URL" --yes --workdir supabase/before

@@ -1,0 +1,26 @@
+name: Reset the rescued shop (nightly)
+
+# Clears demo orders, anonymous visitors and today's check counters every night, and puts the
+# seed (products, Ada and Ben) back. Also keeps the free project awake.
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+
+concurrency: reset-rescue
+
+jobs:
+  reset:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Drop, re-migrate and re-seed
+        env:
+          DB_URL: ${{ secrets.SUPABASE_RESCUE_DB_URL }}
+        run: pnpm exec supabase db reset --remote="$DB_URL" --yes --workdir supabase/rescue
