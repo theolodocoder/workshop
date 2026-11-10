@@ -5,6 +5,7 @@ import { EmptyState } from "@astryxdesign/core/EmptyState";
 import { Heading } from "@astryxdesign/core/Heading";
 import { VStack } from "@astryxdesign/core/Stack";
 import { Table } from "@astryxdesign/core/Table";
+import { Text } from "@astryxdesign/core/Text";
 import { Loading, StoreWaking } from "@/components/StoreStates";
 import { TryToBreakIt } from "@/components/TryToBreakIt";
 import { money } from "@/lib/constants";
@@ -50,6 +51,7 @@ export default function Orders() {
     <VStack gap={8}>
       <VStack gap={3}>
         <Heading level={1}>My orders</Heading>
+        <Text type="supporting">Demo orders are cleared every night, along with demo shoppers.</Text>
         {shopper === null && (
           <EmptyState title="Sign in to see your orders" description="Use the sign-in button at the top of the page. It takes one click." />
         )}
