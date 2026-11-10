@@ -42,7 +42,7 @@ export default defineConfig({
       command: `pnpm exec next start --port ${DOWN_PORT}`,
       port: DOWN_PORT,
       reuseExistingServer: false,
-      env: { SUPABASE_URL: "http://127.0.0.1:59999", BEFORE_SUPABASE_URL: "http://127.0.0.1:59998" },
+      env: { SUPABASE_URL: "http://127.0.0.1:59999", BEFORE_SUPABASE_URL: "http://127.0.0.1:59998", BEFORE_SUPABASE_ANON_KEY: "any" },
     },
     {
       command: `pnpm exec next start --port ${MEASURED_PORT}`,
