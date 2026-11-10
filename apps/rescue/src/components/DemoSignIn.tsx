@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 // FIX 7: the header doesn't load the Supabase client on every page. The server tells us whether
 // a session cookie exists; the client library is only downloaded when someone clicks sign in.
-export function DemoSignIn({ signedIn }: { signedIn: boolean }) {
+export function DemoSignIn({ signedIn, onSignedIn }: { signedIn: boolean; onSignedIn?: () => void }) {
   const router = useRouter();
 
   async function signIn() {
@@ -14,6 +14,7 @@ export function DemoSignIn({ signedIn }: { signedIn: boolean }) {
     const existing = await supabase.auth.getSession();
     if (!existing.data.session) await supabase.auth.signInAnonymously();
     router.refresh();
+    onSignedIn?.();
   }
 
   // FIX 8: a real button, reachable by keyboard and announced by screen readers.

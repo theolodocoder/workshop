@@ -12,6 +12,7 @@ import { Text } from "@astryxdesign/core/Text";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CartLineRow } from "@/components/CartLineRow";
+import { DemoSignIn } from "@/components/DemoSignIn";
 import { clearCart, getCart, removeFromCart, setQty, type CartLine } from "@/lib/cart";
 import { money } from "@/lib/constants";
 import { placeOrder, type PlaceOrderResult } from "./actions";
@@ -21,6 +22,7 @@ type Failure = Exclude<PlaceOrderResult, { orderId: string }>["error"];
 const FAILURES: Record<Failure, { title: string; description: string }> = {
   rate_limited: { title: "That's a lot of orders", description: "Demo shoppers can place 5 orders an hour. Try again later." },
   invalid_cart: { title: "Something in your cart isn't right", description: "Check the quantities (1 to 10) and try again." },
+  not_signed_in: { title: "Sign in to place your order", description: "Orders belong to a shopper. One click signs you in as a demo shopper, and your cart stays as it is." },
   unavailable: { title: "We couldn't place your order", description: "The store didn't answer. Your cart is safe; try again in a minute." },
 };
 
@@ -58,7 +60,14 @@ export default function Cart() {
   return (
     <VStack gap={6}>
       <Heading level={1}>Your cart</Heading>
-      {failure && <Banner status="error" title={FAILURES[failure].title} description={FAILURES[failure].description} />}
+      {failure && (
+        <Banner
+          status={failure === "not_signed_in" ? "info" : "error"}
+          title={FAILURES[failure].title}
+          description={FAILURES[failure].description}
+          endContent={failure === "not_signed_in" ? <DemoSignIn signedIn={false} onSignedIn={() => setFailure(null)} /> : undefined}
+        />
+      )}
       <Grid columns={2} gap={8} align="start">
         <VStack gap={4}>
           {cart.map((l) => (
