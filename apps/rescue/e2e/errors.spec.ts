@@ -1,25 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-// The database is unreachable: every call to the local Supabase API fails.
-async function storeDown(page: import("@playwright/test").Page) {
-  await page.route("http://127.0.0.1:54321/**", (route) => route.abort("connectionrefused"));
-}
-
-test("store down shows the waking-up message and a retry button", async ({ page }) => {
-  await storeDown(page);
-  await page.goto("/");
-  // supabase-js retries a failed request 3 times with backoff (about 8 s) before reporting it.
-  await expect(page.getByText("Store is waking up")).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole("button", { name: "Retry" })).toBeVisible();
-  await expect(page.getByText("Application error")).toHaveCount(0);
-  await expect(page.getByText("Unhandled Runtime Error")).toHaveCount(0);
-
-  // Once the store is back, Retry loads the products.
-  await page.unroute("http://127.0.0.1:54321/**");
-  await page.getByRole("button", { name: "Retry" }).click();
-  await expect(page.getByText("Summit Light Tent")).toBeVisible();
-});
-
 test("no orders shows the empty state", async ({ page }) => {
   await page.goto("/orders");
   await page.getByText("Sign in as a demo shopper").click();

@@ -16,6 +16,8 @@ for (const path of PAGES) {
 
 test("the shop works with a keyboard alone", async ({ page }) => {
   await page.goto("/p/ridge-2-dome-tent");
+  // Server-rendered HTML shows before the page's scripts finish loading; start once it's interactive.
+  await page.waitForLoadState("networkidle");
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
 

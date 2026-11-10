@@ -9,11 +9,10 @@ import { TopNav, TopNavHeading, TopNavItem } from "@astryxdesign/core/TopNav";
 import { ShoppingCartIcon, SunIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { DemoSignIn } from "./DemoSignIn";
-import { TrendSparkline } from "./TrendSparkline";
 
 // FIX 8: a real app shell. Astryx's AppShell adds the skip link and the <main> landmark,
 // and TopNav renders real links in a labelled <nav>.
-export function Shell({ children }: { children: React.ReactNode }) {
+export function Shell({ children, signedIn }: { children: React.ReactNode; signedIn: boolean }) {
   const path = usePathname();
   return (
     <AppShell
@@ -32,8 +31,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           }
           endContent={
             <>
-              <TrendSparkline />
-              <DemoSignIn />
+              <DemoSignIn signedIn={signedIn} />
               <Button label="Cart" variant="primary" href="/cart" icon={<Icon icon={ShoppingCartIcon} size="sm" />} />
             </>
           }

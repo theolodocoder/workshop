@@ -6,7 +6,7 @@ import { Text } from "@astryxdesign/core/Text";
 import { useId, useState } from "react";
 import type { CartLine } from "@/lib/cart";
 import { money } from "@/lib/constants";
-import { CartLine as CartLineSchema } from "@/lib/schemas";
+import { isValidQty } from "@/lib/limits";
 
 // One cart line: a labelled quantity field (checked with the same schema the server uses) and Remove.
 export function CartLineRow({
@@ -24,7 +24,7 @@ export function CartLineRow({
 
   function commit() {
     const qty = Number(draft);
-    if (!CartLineSchema.safeParse({ productId: line.id, qty }).success) {
+    if (!isValidQty(qty)) {
       setBad(true);
       return;
     }

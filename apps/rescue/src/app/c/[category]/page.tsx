@@ -1,35 +1,22 @@
-"use client";
-
-import { EmptyState } from "@astryxdesign/core/EmptyState";
-import { Grid } from "@astryxdesign/core/Grid";
-import { Heading } from "@astryxdesign/core/Heading";
-import { VStack } from "@astryxdesign/core/Stack";
-import { useParams } from "next/navigation";
 import { CategoryTabs } from "@/components/CategoryTabs";
-import { ProductCard } from "@/components/ProductCard";
-import { Loading, StoreWaking } from "@/components/StoreStates";
+import { EmptyCategory } from "@/components/EmptyCategory";
+import { PageIntro } from "@/components/PageIntro";
+import { ProductGrid } from "@/components/ProductGrid";
+import { StoreWaking } from "@/components/StoreStates";
 import { CATEGORIES } from "@/lib/constants";
-import { supabase, type ProductRow } from "@/lib/supabase/browser";
-import { useStore } from "@/lib/useStore";
+import { getProducts } from "@/lib/products";
 
-export default function Category() {
-  const { category } = useParams<{ category: string }>();
-  const store = useStore<ProductRow[]>(() => supabase.from("products").select("*").eq("category", category), [category]);
-  const products = store.status === "ready" ? (store.data ?? []) : [];
+export default async function Category({ params }: { params: Promise<{ category: string }> }) {
+  const { category } = await params;
   const label = CATEGORIES.find(([key]) => key === category)?.[1] ?? category;
-
+  const products = await getProducts(category);
   return (
-    <VStack gap={6}>
-      <Heading level={1}>{label}</Heading>
+    <div style={{ display: "grid", gap: 24 }}>
+      <PageIntro title={label} />
       <CategoryTabs current={category} />
-      {store.status === "loading" && <Loading label="Loading products" />}
-      {store.status === "error" && <StoreWaking onRetry={store.retry} />}
-      {store.status === "ready" && products.length === 0 && (
-        <EmptyState title="Nothing in this category yet" description="Try another category from the shop." />
-      )}
-      <Grid columns={{ minWidth: 240 }} gap={6}>
-        {products.map((p) => <ProductCard key={p.id} p={p} />)}
-      </Grid>
-    </VStack>
+      {!products.ok && <StoreWaking />}
+      {products.ok && products.data.length === 0 && <EmptyCategory />}
+      {products.ok && products.data.length > 0 && <ProductGrid products={products.data} />}
+    </div>
   );
 }

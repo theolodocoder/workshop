@@ -2,21 +2,22 @@
 
 import { Button } from "@astryxdesign/core/Button";
 import { Text } from "@astryxdesign/core/Text";
-import { supabase } from "@/lib/supabase/browser";
-import { useShopper } from "@/lib/useShopper";
+import { useRouter } from "next/navigation";
 
-export function DemoSignIn() {
-  const shopper = useShopper();
+// FIX 7: the header doesn't load the Supabase client on every page. The server tells us whether
+// a session cookie exists; the client library is only downloaded when someone clicks sign in.
+export function DemoSignIn({ signedIn }: { signedIn: boolean }) {
+  const router = useRouter();
 
   async function signIn() {
+    const { supabase } = await import("@/lib/supabase/browser");
     const existing = await supabase.auth.getSession();
-    if (existing.data.session) return;
-    await supabase.auth.signInAnonymously();
+    if (!existing.data.session) await supabase.auth.signInAnonymously();
+    router.refresh();
   }
 
-  if (shopper === undefined) return null;
   // FIX 8: a real button, reachable by keyboard and announced by screen readers.
-  return shopper ? (
+  return signedIn ? (
     <Text type="supporting">Signed in as demo shopper</Text>
   ) : (
     <Button label="Sign in as a demo shopper" variant="secondary" clickAction={signIn} />
