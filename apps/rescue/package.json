@@ -9,7 +9,8 @@
     "start": "next start --port 4310",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "test": "vitest run --dir src"
   },
   "dependencies": {
     "@astryxdesign/core": "0.7.11",
@@ -23,7 +24,8 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "recharts": "3.10.1",
-    "server-only": "0.0.1"
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@astryxdesign/cli": "0.7.11",
@@ -33,6 +35,7 @@
     "@types/react-dom": "19.3.0",
     "@workshop/config": "workspace:*",
     "eslint": "10.14.0",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
   }
 }
