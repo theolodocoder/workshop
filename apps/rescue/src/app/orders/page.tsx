@@ -1,13 +1,16 @@
 "use client";
 
-import { money } from "@/lib/constants";
 import { Button } from "@astryxdesign/core/Button";
 import { EmptyState } from "@astryxdesign/core/EmptyState";
+import { Heading } from "@astryxdesign/core/Heading";
+import { VStack } from "@astryxdesign/core/Stack";
+import { Table } from "@astryxdesign/core/Table";
 import { Loading, StoreWaking } from "@/components/StoreStates";
+import { TryToBreakIt } from "@/components/TryToBreakIt";
+import { money } from "@/lib/constants";
 import { supabase } from "@/lib/supabase/browser";
 import { useShopper } from "@/lib/useShopper";
 import { useStore } from "@/lib/useStore";
-import { TryToBreakIt } from "@/components/TryToBreakIt";
 
 type Order = {
   id: string;
@@ -15,6 +18,13 @@ type Order = {
   created_at: string;
   order_items: { qty: number; products: { name: string } }[];
 };
+
+interface Row extends Record<string, unknown> {
+  id: string;
+  placed: string;
+  items: string;
+  total: string;
+}
 
 export default function Orders() {
   const shopper = useShopper();
@@ -29,28 +39,39 @@ export default function Orders() {
         : Promise.resolve({ data: [], error: null }),
     [shopper],
   );
-  const orders = store.status === "ready" ? (store.data ?? []) : [];
+  const rows: Row[] = (store.status === "ready" ? (store.data ?? []) : []).map((o) => ({
+    id: o.id.slice(0, 8).toUpperCase(),
+    placed: new Date(o.created_at).toLocaleString(),
+    items: o.order_items.map((i) => `${i.products.name} ×${i.qty}`).join(", "),
+    total: money(o.total_cents),
+  }));
 
   return (
-    <div>
-      <h1 style={{ fontSize: 32, fontWeight: 700 }}>My orders</h1>
-      {shopper === null && (
-        <EmptyState title="Sign in to see your orders" description="Use the sign-in button at the top of the page. It takes one click." />
-      )}
-      {shopper && store.status === "loading" && <Loading label="Loading your orders" />}
-      {shopper && store.status === "error" && <StoreWaking onRetry={store.retry} />}
-      {shopper && store.status === "ready" && orders.length === 0 && (
-        <EmptyState title="No orders yet" description="When you check out, your orders show up here." actions={<Button label="Browse the shop" href="/" />} />
-      )}
-      {orders.map((o) => (
-        <div key={o.id} style={{ padding: "12px 0", borderBottom: "1px solid #eee" }}>
-          <div>{o.order_items.map((i) => `${i.products.name} ×${i.qty}`).join(", ")}</div>
-          <div style={{ color: "#c4c4c4" }}>{new Date(o.created_at).toLocaleString()} · {money(o.total_cents)}</div>
-        </div>
-      ))}
-      <div style={{ marginTop: 40 }}>
-        <TryToBreakIt />
-      </div>
-    </div>
+    <VStack gap={8}>
+      <VStack gap={3}>
+        <Heading level={1}>My orders</Heading>
+        {shopper === null && (
+          <EmptyState title="Sign in to see your orders" description="Use the sign-in button at the top of the page. It takes one click." />
+        )}
+        {shopper && store.status === "loading" && <Loading label="Loading your orders" />}
+        {shopper && store.status === "error" && <StoreWaking onRetry={store.retry} />}
+        {shopper && store.status === "ready" && rows.length === 0 && (
+          <EmptyState title="No orders yet" description="When you check out, your orders show up here." actions={<Button label="Browse the shop" href="/" />} />
+        )}
+        {rows.length > 0 && (
+          <Table<Row>
+            data={rows}
+            idKey="id"
+            columns={[
+              { key: "id", header: "Order" },
+              { key: "placed", header: "Placed" },
+              { key: "items", header: "Items" },
+              { key: "total", header: "Total", align: "end" },
+            ]}
+          />
+        )}
+      </VStack>
+      <TryToBreakIt />
+    </VStack>
   );
 }

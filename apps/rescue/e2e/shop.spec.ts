@@ -5,7 +5,7 @@ test("a demo shopper can browse, add a tent, check out and see the order", async
   await page.getByText("Sign in as a demo shopper").click();
   await expect(page.getByText("Signed in as demo shopper")).toBeVisible();
 
-  await page.getByText("Tents", { exact: true }).click();
+  await page.getByRole("link", { name: "Tents" }).click();
   await page.getByText("Summit Light Tent").click();
   await expect(page.getByRole("heading", { name: "Summit Light Tent" })).toBeVisible();
   await page.getByText("Add to cart").click();

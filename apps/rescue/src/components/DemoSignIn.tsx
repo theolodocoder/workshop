@@ -1,28 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Button } from "@astryxdesign/core/Button";
+import { Text } from "@astryxdesign/core/Text";
 import { supabase } from "@/lib/supabase/browser";
+import { useShopper } from "@/lib/useShopper";
 
 export function DemoSignIn() {
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUserId(data.session?.user.id ?? null));
-  }, []);
+  const shopper = useShopper();
 
   async function signIn() {
     const existing = await supabase.auth.getSession();
-    if (existing.data.session) return setUserId(existing.data.session.user.id);
-    const { data } = await supabase.auth.signInAnonymously();
-    setUserId(data.user!.id);
+    if (existing.data.session) return;
+    await supabase.auth.signInAnonymously();
   }
 
-  // PLANTED PROBLEM 8: a clickable <div>, so keyboards and screen readers can't use it.
-  return userId ? (
-    <span style={{ color: "#9aa59f", fontSize: 13 }}>Signed in as demo shopper</span>
+  if (shopper === undefined) return null;
+  // FIX 8: a real button, reachable by keyboard and announced by screen readers.
+  return shopper ? (
+    <Text type="supporting">Signed in as demo shopper</Text>
   ) : (
-    <div onClick={signIn} style={{ cursor: "pointer", background: "#2F6B4F", color: "white", padding: "6px 12px", borderRadius: 8 }}>
-      Sign in as a demo shopper
-    </div>
+    <Button label="Sign in as a demo shopper" variant="secondary" clickAction={signIn} />
   );
 }

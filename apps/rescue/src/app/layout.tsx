@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Header } from "@/components/Header";
+import { Shell } from "@/components/Shell";
 
 export const metadata: Metadata = {
   title: "Northfold Outfitters (rescued)",
@@ -13,8 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Providers>
-          <Header />
-          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "32px 24px 64px" }}>{children}</div>
+          <Shell>{children}</Shell>
         </Providers>
       </body>
     </html>
