@@ -16,7 +16,8 @@
     "db:start": "supabase start --workdir supabase/before && supabase start --workdir supabase/rescue",
     "db:reset": "supabase db reset --workdir supabase/before && supabase db reset --workdir supabase/rescue",
     "db:stop": "supabase stop --workdir supabase/before && supabase stop --workdir supabase/rescue",
-    "test:db": "vitest run"
+    "test:db": "vitest run",
+    "results": "node scripts/collect-results.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

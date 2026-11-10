@@ -1,0 +1,27 @@
+name: Lighthouse
+
+# Runs after Vercel finishes a deployment of either shop (before or rescued).
+# Budgets are warnings: the job records the real numbers whatever they are.
+on:
+  deployment_status:
+
+jobs:
+  lighthouse:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Name the artifact after the Vercel project
+        id: name
+        env:
+          ENVIRONMENT: ${{ github.event.deployment.environment }}
+        run: |
+          slug=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-|-$//g')
+          echo "artifact=lighthouse-$slug" >> "$GITHUB_OUTPUT"
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: ${{ github.event.deployment_status.environment_url }}/c/tents
+          configPath: ./lighthouserc.json
+          runs: 5
+          uploadArtifacts: true
+          artifactName: ${{ steps.name.outputs.artifact }}
