@@ -1,25 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useState } from "react";
+import { notFound, useParams } from "next/navigation";
 import { addToCart } from "@/lib/cart";
 import { CartLine } from "@/lib/schemas";
 import { money } from "@/lib/constants";
+import { Loading, StoreWaking } from "@/components/StoreStates";
 import { supabase, type ProductRow } from "@/lib/supabase/browser";
+import { useStore } from "@/lib/useStore";
 
 export default function Product() {
   const { slug } = useParams<{ slug: string }>();
-  const [p, setP] = useState<ProductRow | null>(null);
+  const store = useStore<ProductRow>(() => supabase.from("products").select("*").eq("slug", slug).maybeSingle(), [slug]);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [qtyError, setQtyError] = useState(false);
 
-  useEffect(() => {
-    // PLANTED PROBLEM 4: .single() throws on an unknown slug and nothing catches it.
-    supabase.from("products").select("*").eq("slug", slug).single().then(({ data }) => setP(data!));
-  }, [slug]);
-
-  if (!p) return null;
+  // FIX 4: loading, error with Retry, and a real not-found page for unknown products.
+  if (store.status === "loading") return <Loading label="Loading product" />;
+  if (store.status === "error") return <StoreWaking onRetry={store.retry} />;
+  const p = store.data;
+  if (!p) notFound();
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
       <img src={`/products/${p.image_file}`} style={{ width: "100%", borderRadius: 12 }} />

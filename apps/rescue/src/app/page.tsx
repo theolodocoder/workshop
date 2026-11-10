@@ -1,20 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
 import { CATEGORIES } from "@/lib/constants";
+import { Loading, StoreWaking } from "@/components/StoreStates";
 import { supabase, type ProductRow } from "@/lib/supabase/browser";
+import { useStore } from "@/lib/useStore";
 
 export default function Home() {
   const router = useRouter();
-  const [products, setProducts] = useState<ProductRow[]>([]);
-
-  // PLANTED PROBLEM 7: all data is fetched in the browser after the page loads.
-  // PLANTED PROBLEM 4: no loading, empty or error state. If this fails, the page stays blank.
-  useEffect(() => {
-    supabase.from("products").select("*").then(({ data }) => setProducts(data!));
-  }, []);
+  // PLANTED PROBLEM 7 (fixed in M5): data is still fetched in the browser after the page loads.
+  // FIX 4: loading and error states, with Retry.
+  const store = useStore<ProductRow[]>(() => supabase.from("products").select("*"), []);
 
   return (
     <div>
@@ -26,8 +23,10 @@ export default function Home() {
           </div>
         ))}
       </div>
+      {store.status === "loading" && <Loading label="Loading products" />}
+      {store.status === "error" && <StoreWaking onRetry={store.retry} />}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 24 }}>
-        {products.map((p) => <ProductCard key={p.id} p={p} />)}
+        {store.status === "ready" && (store.data ?? []).map((p) => <ProductCard key={p.id} p={p} />)}
       </div>
     </div>
   );
