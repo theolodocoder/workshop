@@ -1,4 +1,4 @@
-// Cart lives in localStorage, prices and all. (PLANTED PROBLEM 3: the browser owns the price.)
+// The cart lives in localStorage for the preview only. Prices here are never trusted: the server prices the order (fix 3).
 export type CartLine = { id: string; name: string; price_cents: number; qty: number };
 
 export function getCart(): CartLine[] {

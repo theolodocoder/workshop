@@ -4,29 +4,22 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { clearCart, getCart, type CartLine } from "@/lib/cart";
 import { money } from "@/lib/constants";
-import { supabase } from "@/lib/supabase/browser";
+import { placeOrder } from "./actions";
 
 export default function Cart() {
   const router = useRouter();
   const [lines, setLines] = useState<CartLine[]>([]);
   useEffect(() => setLines(getCart()), []);
 
-  // PLANTED PROBLEM 3: the total is computed in the browser from prices stored in localStorage,
-  // and written straight to the database. Edit localStorage and you pick your own price.
+  // The total shown here is only a preview. FIX 3: the server prices the real order.
   const total = lines.reduce((sum, l) => sum + l.price_cents * l.qty, 0);
 
-  async function placeOrder() {
-    const { data: session } = await supabase.auth.getSession();
-    const { data: order } = await supabase
-      .from("orders")
-      .insert({ user_id: session.session!.user.id, total_cents: total })
-      .select()
-      .single();
-    await supabase.from("order_items").insert(
-      lines.map((l) => ({ order_id: order!.id, product_id: l.id, qty: l.qty, unit_price_cents: l.price_cents })),
-    );
-    clearCart();
-    router.push("/orders");
+  async function checkout() {
+    const result = await placeOrder(lines.map((l) => ({ productId: l.id, qty: l.qty })));
+    if ("orderId" in result) {
+      clearCart();
+      router.push("/orders");
+    }
   }
 
   return (
@@ -40,7 +33,7 @@ export default function Cart() {
         </div>
       ))}
       <div style={{ fontWeight: 700, margin: "16px 0" }}>Total {money(total)}</div>
-      <div onClick={placeOrder} style={{ cursor: "pointer", display: "inline-block", background: "#2F6B4F", color: "white", padding: "10px 18px", borderRadius: 8 }}>
+      <div onClick={checkout} style={{ cursor: "pointer", display: "inline-block", background: "#2F6B4F", color: "white", padding: "10px 18px", borderRadius: 8 }}>
         Place order
       </div>
     </div>
