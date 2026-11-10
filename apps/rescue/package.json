@@ -1,0 +1,32 @@
+{
+  "name": "rescue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 4310",
+    "build": "next build",
+    "start": "next start --port 4310",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@astryxdesign/core": "0.7.11",
+    "@astryxdesign/theme-neutral": "0.7.11",
+    "@workshop/ui": "workspace:*",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@astryxdesign/cli": "0.7.11",
+    "@playwright/test": "1.65.0",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@workshop/config": "workspace:*",
+    "eslint": "10.14.0",
+    "typescript": "6.0.3"
+  }
+}

@@ -11,3 +11,4 @@ test-results/
 .superpowers/
 supabase/*/.temp/
 supabase/*/.branches/
+*.tsbuildinfo

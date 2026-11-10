@@ -14,11 +14,11 @@
     "e2e": "turbo run e2e"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.14.0",
-    "prettier": "^3.9.10",
-    "turbo": "^2.11.10",
+    "@eslint/js": "10.0.1",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "turbo": "2.11.10",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.72.1"
+    "typescript-eslint": "8.72.1"
   }
 }

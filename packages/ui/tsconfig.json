@@ -1,0 +1,1 @@
+{ "extends": "@workshop/config/tsconfig.base.json", "include": ["src"] }

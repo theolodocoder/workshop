@@ -1,3 +1,10 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+# @astryxdesign/core's postinstall only prints an "run astryx init" hint; keep it off.
+allowBuilds:
+  "@astryxdesign/core": false
+  "@astryxdesign/cli": false
+
+saveExact: true
