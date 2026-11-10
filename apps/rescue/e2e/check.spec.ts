@@ -2,6 +2,11 @@ import { expect, test } from "@playwright/test";
 
 // Runs against the "check" server, whose PageSpeed and AI calls go to e2e-tools/mock-apis.mjs.
 // The headers check reads real public sites (example.com / example.org).
+// The daily limit is per IP, so each test gets its own made-up visitor IP (Vercel sets this header in production).
+test.beforeEach(async ({ page }) => {
+  const octet = () => Math.floor(Math.random() * 254) + 1;
+  await page.setExtraHTTPHeaders({ "x-forwarded-for": `203.0.${octet()}.${octet()}` });
+});
 async function check(page: import("@playwright/test").Page, url: string) {
   await page.getByLabel("Your site's address").fill(url);
   await page.getByRole("button", { name: "Check it" }).click();
@@ -45,4 +50,16 @@ test("when the AI is unavailable, the results still show in our own words", asyn
   await check(page, "https://example.org/?ai-fails");
   await expect(page.getByText("AI summary unavailable today")).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("check-result")).toContainText("Your page is slow to respond to taps");
+});
+
+test("clearing cookies doesn't reset the daily limit", async ({ page, context }) => {
+  await page.goto("/check");
+  for (let i = 0; i < 3; i++) {
+    await check(page, "https://example.com");
+    await expect(page.getByTestId("check-result")).toBeVisible({ timeout: 20_000 });
+  }
+  await context.clearCookies();
+  await page.reload();
+  await check(page, "https://example.com");
+  await expect(page.getByText("You've used today's 3 checks")).toBeVisible();
 });

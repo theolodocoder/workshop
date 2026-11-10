@@ -2,6 +2,7 @@
 
 import {
   assertPublicUrl,
+  checkSalt,
   fetchHeadersSafely,
   headerFindings,
   type Item,
@@ -11,25 +12,18 @@ import {
   visitorHash,
   workersAi,
 } from "@workshop/ai";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { CheckUrl } from "@/lib/schemas";
 import { supabaseStore } from "@/lib/supabase/server";
 
 export type CheckResult = { url: string; performance: number; accessibility: number; items: Item[]; ai: boolean };
 export type CheckError = { error: "invalid" | "unsafe" | "visitor_limit" | "global_limit" | "unavailable" };
 
-const VISITOR_COOKIE = "nf_visitor";
-
+// The daily limit is per IP (see visitorHash). Behind Vercel, x-forwarded-for is set by the platform.
 async function visitor(): Promise<string> {
-  const jar = await cookies();
-  let id = jar.get(VISITOR_COOKIE)?.value;
-  if (!id) {
-    id = crypto.randomUUID();
-    jar.set(VISITOR_COOKIE, id, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 365, path: "/" });
-  }
   const h = await headers();
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip") ?? "unknown";
-  return visitorHash(id, ip, process.env.CHECK_SALT ?? "local-dev-salt");
+  return visitorHash(ip, checkSalt(process.env.CHECK_SALT, process.env.NODE_ENV));
 }
 
 /**

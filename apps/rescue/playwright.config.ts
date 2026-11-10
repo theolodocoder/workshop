@@ -61,6 +61,7 @@ export default defineConfig({
         CF_AI_BASE_URL: `http://127.0.0.1:${MOCK_PORT}/cf`,
         CF_ACCOUNT_ID: "test-account",
         CF_AI_TOKEN: "test-token",
+        CHECK_SALT: "test-salt-not-a-secret-0123456789",
       },
     },
   ],
