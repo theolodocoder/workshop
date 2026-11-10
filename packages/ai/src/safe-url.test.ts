@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assertPublicUrl, fetchHeadersSafely, UnsafeUrlError } from "./safe-url.ts";
+import { assertPublicUrl, fetchHeadersSafely, UnsafeUrlError, withTimeout } from "./safe-url.ts";
 
 const resolvesTo = (...ips: string[]) => async () => ips;
 
@@ -72,5 +72,17 @@ describe("fetchHeadersSafely", () => {
     let n = 0;
     const fetchImpl = async () => new Response(null, { status: 301, headers: { location: `https://example.com/${++n}` } });
     expect(await reason(fetchHeadersSafely(new URL("https://example.com"), { fetchImpl, lookup: publicLookup }))).toBe("too_many_redirects");
+  });
+});
+
+describe("withTimeout", () => {
+  it("treats a lookup that never answers as unresolvable", async () => {
+    const hung = withTimeout(() => new Promise<string[]>(() => {}), 30);
+    expect(await hung("slow.example")).toEqual([]);
+    expect(await reason(assertPublicUrl("https://slow.example", hung))).toBe("unresolvable");
+  });
+
+  it("passes a quick answer through", async () => {
+    expect(await withTimeout(async () => ["93.184.216.34"], 1000)("example.com")).toEqual(["93.184.216.34"]);
   });
 });

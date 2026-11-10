@@ -23,7 +23,7 @@ test("the shop still works under the policy, with no CSP errors", async ({ page 
   page.on("console", (m) => {
     if (/Content Security Policy|Refused to/i.test(m.text())) violations.push(m.text());
   });
-  await page.goto("/p/enamel-camp-mug");
+  await page.goto("/p/enamel-camp-mug", { waitUntil: "networkidle" });
   await page.getByText("Sign in as a demo shopper").click();
   await expect(page.getByText("Signed in as demo shopper")).toBeVisible();
   await page.getByText("Add to cart").click();

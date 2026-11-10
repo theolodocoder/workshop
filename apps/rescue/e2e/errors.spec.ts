@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("no orders shows the empty state", async ({ page }) => {
-  await page.goto("/orders");
+  await page.goto("/orders", { waitUntil: "networkidle" });
   await page.getByText("Sign in as a demo shopper").click();
   await expect(page.getByRole("heading", { name: "No orders yet" })).toBeVisible();
 });

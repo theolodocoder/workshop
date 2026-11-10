@@ -17,13 +17,26 @@ export class UnsafeUrlError extends Error {
 
 export type Lookup = (host: string) => Promise<string[]>;
 
-const defaultLookup: Lookup = async (host) => {
-  try {
-    return (await dnsLookup(host, { all: true, verbatim: true })).map((a) => a.address);
-  } catch {
-    return [];
-  }
-};
+/** Wraps a lookup so a name that takes longer than `ms` to resolve counts as unresolvable (no addresses). */
+export function withTimeout(lookup: Lookup, ms: number): Lookup {
+  return async (host) => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<string[]>((resolve) => {
+      timer = setTimeout(() => resolve([]), ms);
+    });
+    try {
+      return await Promise.race([lookup(host).catch(() => []), timeout]);
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+}
+
+// A slow DNS server can't stall a check: 5 s, then the name counts as unresolvable.
+const defaultLookup: Lookup = withTimeout(
+  async (host) => (await dnsLookup(host, { all: true, verbatim: true })).map((a) => a.address),
+  5000,
+);
 
 const v4 = (ip: string) => ip.split(".").reduce((n, octet) => (n << 8) + Number(octet), 0) >>> 0;
 const inV4 = (ip: string, base: string, bits: number) => {

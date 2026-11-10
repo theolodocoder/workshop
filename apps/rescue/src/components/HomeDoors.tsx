@@ -66,9 +66,6 @@ export function HomeDoors({ beforeUrl, beforeAwake, clipUrl }: { beforeUrl: stri
       <HStack gap={2} hAlign="center">
         <Button label="Read the rescue report" variant="ghost" href="/report" />
       </HStack>
-      <Text type="supporting" justify="center">
-        Built by Promise Okafor · Built on Astryx (MIT, by Meta) · Photos from Unsplash
-      </Text>
     </VStack>
   );
 }

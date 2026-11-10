@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("browse, add two things, change a quantity, remove one, check out", async ({ page }) => {
-  await page.goto("/shop");
+  await page.goto("/shop", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Sign in as a demo shopper" }).click();
   await expect(page.getByText("Signed in as demo shopper")).toBeVisible();
 
@@ -12,7 +12,7 @@ test("browse, add two things, change a quantity, remove one, check out", async (
   await page.getByRole("button", { name: "Add to cart" }).click();
   await expect(page.getByText("Added to your cart")).toBeVisible();
 
-  await page.goto("/p/enamel-camp-mug");
+  await page.goto("/p/enamel-camp-mug", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Add to cart" }).click();
   await expect(page.getByText("Added to your cart")).toBeVisible();
 

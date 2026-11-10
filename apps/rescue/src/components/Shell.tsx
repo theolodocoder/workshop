@@ -9,12 +9,14 @@ import { TopNav, TopNavHeading, TopNavItem } from "@astryxdesign/core/TopNav";
 import { ShoppingCartIcon, SunIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { DemoSignIn } from "./DemoSignIn";
+import { SiteFooter } from "./SiteFooter";
 
 // FIX 8: a real app shell. Astryx's AppShell adds the skip link and the <main> landmark,
 // and TopNav renders real links in a labelled <nav>.
 export function Shell({ children, signedIn }: { children: React.ReactNode; signedIn: boolean }) {
   const path = usePathname();
   return (
+    <>
     <AppShell
       height="auto"
       variant="section"
@@ -42,5 +44,8 @@ export function Shell({ children, signedIn }: { children: React.ReactNode; signe
     >
       <div style={{ maxWidth: 1180, marginInline: "auto", padding: "32px 24px 64px" }}>{children}</div>
     </AppShell>
+    {/* Outside AppShell's <main>, so it's the page's contentinfo landmark. */}
+    <SiteFooter />
+    </>
   );
 }
