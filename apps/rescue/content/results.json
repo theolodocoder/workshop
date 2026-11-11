@@ -1,0 +1,19 @@
+{
+  "measuredAt": "2026-11-11",
+  "method": "Lighthouse 12.6 via Lighthouse CI on GitHub Actions, mobile, simulated throttling, median of 5 runs on /c/tents of each live site",
+  "before": {
+    "lcpMs": 17145,
+    "tbtMs": 187,
+    "cls": 0.507,
+    "jsKb": 376,
+    "axeIssues": 17
+  },
+  "after": {
+    "lcpMs": 3686,
+    "tbtMs": 187,
+    "cls": 0.038,
+    "jsKb": 315,
+    "axeIssues": 0
+  },
+  "testCount": 145
+}

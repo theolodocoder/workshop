@@ -1,6 +1,6 @@
 # Portfolio item text (draft, Promise approves before anything is posted)
 
-Facts only. Measured numbers go in after the release, copied from the live rescue report. Supabase is described only as used in this project.
+Facts only. Measured numbers, if used, are copied from the live rescue report (2026-11-11: LCP 17.1 s → 3.7 s, CLS 0.51 → 0.04, accessibility problems 17 → 0). Supabase is described only as used in this project.
 
 ## Upwork portfolio
 
@@ -31,7 +31,7 @@ Next.js · React · TypeScript · Web Application Security · Web Accessibility 
 2. Screenshot: the "Try to break it" result, before (opened) and rescued (blocked)
 3. Screenshot: the rescue report with the before/after numbers
 
-**Project URL:** the live home page *(added at release)*
+**Project URL:** https://okafor-workshop-rescue.vercel.app
 
 ## Fiverr portfolio project
 
@@ -48,5 +48,5 @@ I took a typical AI-built shop and fixed what usually goes wrong: open database 
 ## Proposal line (one sentence, to adapt per job)
 
 ```
-Here's a live example of an app I rescued, with the before and after side by side and a test for every fix: <live link>
+Here's a live example of an app I rescued, with the before and after side by side and a test for every fix: https://okafor-workshop-rescue.vercel.app
 ```

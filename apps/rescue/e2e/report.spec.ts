@@ -16,13 +16,11 @@ test("frontend focus puts speed, then accessibility, first", async ({ page }) =>
   await expect(cards.last()).toContainText("Fix 3");
 });
 
-test("without measured results, the report says so instead of showing numbers", async ({ page }) => {
+test("every fix links to its public commit on GitHub", async ({ page }) => {
   await page.goto("/report");
-  await expect(page.getByText("Not measured yet")).toBeVisible();
-  await expect(page.getByText(/\d+(\.\d+)?\s?s\b/)).toHaveCount(0);
-});
-
-test("a fix without a released commit says so, not a broken link", async ({ page }) => {
-  await page.goto("/report");
-  await expect(page.getByText("Link after release").first()).toBeVisible();
+  const links = page.getByRole("link", { name: "See the commit" });
+  await expect(links).toHaveCount(9);
+  const hrefs = await links.evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+  for (const h of hrefs) expect(h).toMatch(/^https:\/\/github\.com\/theolodocoder\/workshop\/commit\/[0-9a-f]{40}$/);
+  await expect(page.getByText("Link after release")).toHaveCount(0);
 });

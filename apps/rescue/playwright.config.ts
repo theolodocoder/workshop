@@ -14,13 +14,13 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      testIgnore: /(store-down|report-measured|check)\.spec\.ts/,
+      testIgnore: /(store-down|report-measured|report-unmeasured|check)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${PORT}` },
     },
     {
       // The same build, but its server talks to a database address nobody answers.
       name: "store-down",
-      testMatch: /store-down\.spec\.ts/,
+      testMatch: /(store-down|report-unmeasured)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], baseURL: `http://localhost:${DOWN_PORT}` },
     },
     {
@@ -42,7 +42,7 @@ export default defineConfig({
       command: `pnpm exec next start --port ${DOWN_PORT}`,
       port: DOWN_PORT,
       reuseExistingServer: false,
-      env: { SUPABASE_URL: "http://127.0.0.1:59999", BEFORE_SUPABASE_URL: "http://127.0.0.1:59998", BEFORE_SUPABASE_ANON_KEY: "any" },
+      env: { SUPABASE_URL: "http://127.0.0.1:59999", BEFORE_SUPABASE_URL: "http://127.0.0.1:59998", BEFORE_SUPABASE_ANON_KEY: "any", RESULTS_PATH: "e2e/fixtures/no-such-results.json" },
     },
     {
       command: `pnpm exec next start --port ${MEASURED_PORT}`,

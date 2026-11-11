@@ -4,8 +4,8 @@ Live, working proof of how I build and fix web apps. Everything here runs on fak
 
 **Project 1: Northfold Outfitters, an app rescue.** A typical AI-built shop, side by side with the same shop after nine fixes. Try to break both.
 
-- Live demo: *(added at release)*
-- Rescue report: *(added at release)* · the frontend view: `/report?focus=frontend`
+- Live demo: https://okafor-workshop-rescue.vercel.app (the before shop: https://okafor-workshop-rescue-before.vercel.app)
+- Rescue report: https://okafor-workshop-rescue.vercel.app/report · the frontend view: https://okafor-workshop-rescue.vercel.app/report?focus=frontend
 - Built by [Promise Okafor](https://promise-okafor.vercel.app) · [GitHub](https://github.com/theolodocoder)
 
 ## What this proves
@@ -26,10 +26,12 @@ Live, working proof of how I build and fix web apps. Everything here runs on fak
 | Errors | Blank page | Clear message and Retry |
 | Keyboard and screen readers | Clickable divs | Real controls, axe-checked |
 | Security headers | None | Nonce-based CSP, HSTS and more |
-| Speed | Measured on the report | Measured on the report |
+| Main content on a phone (LCP) | 17.1 s | 3.7 s |
+| Layout shift (CLS) | 0.51 | 0.04 |
+| Accessibility problems (axe, serious + critical) | 17 | 0 |
 | Tests | None | Unit, database and end-to-end in CI |
 
-The measured numbers (LCP, TBT, CLS, JavaScript, accessibility problems) live on the [rescue report](#), written by a script from Lighthouse CI runs on the deployed sites (mobile, median of 5 runs). They are never typed in by hand.
+Measured 2026-11-11 with Lighthouse 12.6 (Lighthouse CI on GitHub Actions, mobile, simulated throttling, median of 5 runs on `/c/tents` of each live site). All the numbers, including the ones that didn't change, are on the [rescue report](https://okafor-workshop-rescue.vercel.app/report). A script writes them from the Lighthouse runs. They are never typed in by hand.
 
 ## How it's built
 
