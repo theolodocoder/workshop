@@ -15,9 +15,11 @@ test("the category page lists products in the HTML, even with JavaScript blocked
 
 test("every product photo is sized for the screen and reserves its space", async ({ page }) => {
   await page.goto("/c/tents");
-  const imgs = page.locator('img[alt="Ridge 2 Dome Tent"], main img');
-  expect(await imgs.count()).toBeGreaterThan(0);
-  const info = await page.locator("main img").evaluateAll((els) =>
+  // Astryx's AppShell renders the main area as <div role="main">, not a <main> tag.
+  const photos = page.getByRole("main").locator("img");
+  await expect(photos.first()).toBeVisible();
+  expect(await photos.count()).toBeGreaterThan(0);
+  const info = await photos.evaluateAll((els) =>
     els.map((img) => ({ srcset: img.getAttribute("srcset"), w: img.getAttribute("width"), h: img.getAttribute("height") })),
   );
   for (const i of info) {
