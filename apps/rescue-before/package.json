@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --port 4311",
-    "build": "next build",
+    "dev": "pnpm photos && next dev --port 4311",
+    "build": "pnpm photos && next build",
     "start": "next start --port 4311",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "photos": "node ../../scripts/copy-photos.mjs public/products"
   },
   "dependencies": {
     "@astryxdesign/core": "0.7.11",
