@@ -1,27 +1,45 @@
 name: Lighthouse
 
-# Runs after Vercel finishes a deployment of either shop (before or rescued).
+# Measures one deployed shop: mobile, Lighthouse's standard simulated throttling (as PageSpeed Insights uses),
+# median of 5 runs. Runs after each Vercel deployment, or by hand for a given URL.
 # Budgets are warnings: the job records the real numbers whatever they are.
 on:
   deployment_status:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Page to measure, e.g. https://okafor-workshop-rescue.vercel.app/c/tents"
+        required: true
+      name:
+        description: "Artifact name, e.g. lighthouse-rescue or lighthouse-before"
+        required: true
 
 jobs:
   lighthouse:
-    if: github.event.deployment_status.state == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Name the artifact after the Vercel project
-        id: name
+      - name: Choose the page and the artifact name
+        id: target
         env:
+          INPUT_URL: ${{ inputs.url }}
+          INPUT_NAME: ${{ inputs.name }}
+          DEPLOY_URL: ${{ github.event.deployment_status.environment_url }}
           ENVIRONMENT: ${{ github.event.deployment.environment }}
         run: |
-          slug=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-|-$//g')
-          echo "artifact=lighthouse-$slug" >> "$GITHUB_OUTPUT"
+          if [ -n "$INPUT_URL" ]; then
+            echo "url=$INPUT_URL" >> "$GITHUB_OUTPUT"
+            echo "artifact=$INPUT_NAME" >> "$GITHUB_OUTPUT"
+          else
+            slug=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-|-$//g')
+            echo "url=$DEPLOY_URL/c/tents" >> "$GITHUB_OUTPUT"
+            echo "artifact=lighthouse-$slug" >> "$GITHUB_OUTPUT"
+          fi
       - uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: ${{ github.event.deployment_status.environment_url }}/c/tents
+          urls: ${{ steps.target.outputs.url }}
           configPath: ./lighthouserc.json
           runs: 5
           uploadArtifacts: true
-          artifactName: ${{ steps.name.outputs.artifact }}
+          artifactName: ${{ steps.target.outputs.artifact }}

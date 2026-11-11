@@ -57,7 +57,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   }
   const r = await collectResults(beforeDir, afterDir, {
     measuredAt: new Date().toISOString().slice(0, 10),
-    method: "Lighthouse CI on the deployed preview, mobile profile, median of 5 runs, page /c/tents",
+    method: "Lighthouse via Lighthouse CI on GitHub Actions, mobile, simulated throttling, median of 5 runs, page /c/tents of each live site",
     testCount: flag("tests"),
     axe: { before: flag("axe-before"), after: flag("axe-after") },
   });

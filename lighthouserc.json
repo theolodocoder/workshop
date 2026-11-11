@@ -1,11 +1,36 @@
 {
   "ci": {
-    "collect": { "numberOfRuns": 5, "settings": { "preset": "perf", "formFactor": "mobile", "screenEmulation": { "mobile": true } } },
+    "collect": {
+      "numberOfRuns": 5,
+      "settings": {
+        "preset": "perf",
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true
+        },
+        "throttlingMethod": "simulate"
+      }
+    },
     "assert": {
       "assertions": {
-        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
-        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
-        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }]
+        "largest-contentful-paint": [
+          "warn",
+          {
+            "maxNumericValue": 2500
+          }
+        ],
+        "total-blocking-time": [
+          "warn",
+          {
+            "maxNumericValue": 200
+          }
+        ],
+        "cumulative-layout-shift": [
+          "warn",
+          {
+            "maxNumericValue": 0.1
+          }
+        ]
       }
     }
   }
